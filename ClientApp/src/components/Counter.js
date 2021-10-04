@@ -54,21 +54,24 @@ export class Counter extends Component {
     });
   }
 
-  async resultValue() {
-    this.setState({ input: eval(this.state.input) });
-    await fetch("api/calculate", {
-      method: "post",
-      headers: {
-        Accept: "application/json, text/plain, */*",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        id: this.state.index + 1,
-        result: this.state.input,
-      }),
-    })
-      .then((res) => res.json())
-      .then((res) => console.log(res));
+  resultValue() {
+    this.setState(
+      { input: eval(this.state.input) },
+      async () =>
+        await fetch("api/calculate", {
+          method: "post",
+          headers: {
+            Accept: "application/json, text/plain, */*",
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            id: this.state.index + 1,
+            result: this.state.input,
+          }),
+        })
+          .then((res) => res.json())
+          .then((res) => console.log(res))
+    );
   }
 
   clear() {
