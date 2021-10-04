@@ -113,9 +113,19 @@ export class Counter extends Component {
   async getData() {
     const response = await fetch("api/calculate");
     const data = await response.json();
-    this.setState({
-      input: data[0].result.toString(),
-      index: data[0].id,
-    });
+
+    if (!data[0]) {
+      this.setState({
+        input: "",
+        index: 0,
+      });
+    }
+
+    if (data[0]) {
+      this.setState({
+        input: data[0].result.toString(),
+        index: data[0].id,
+      });
+    }
   }
 }
